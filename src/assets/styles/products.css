@@ -1,0 +1,95 @@
+.products_page {
+    padding: 40px 0;
+    position: relative;
+
+    .side_bar {
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid var(--stroke);
+        background: var(--light-gray);
+        display: flex;
+        gap: 16px;
+        flex-direction: column;
+        position: sticky;
+        top: 132px;
+        max-height: 600px;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .line {
+            width: 100%;
+            height: 1px;
+            background: var(--stroke);
+        }
+
+        .search {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--stroke);
+            outline: none;
+            box-shadow: none;
+        }
+
+        .accordion {
+            display: flex;
+            gap: 16px;
+            flex-direction: column;
+
+            .accordion-item {
+                border: 0 !important;
+                background: none !important;
+            }
+
+            .accordion-button {
+                background: none !important;
+                border: 0 !important;
+                padding: 4px;
+                box-shadow: none !important;
+
+                &:not(.collapsed) {
+                    background: none !important;
+                }
+
+                &::after {
+                    width: 16px;
+                    height: 16px;
+                    background-size: contain;
+                }
+            }
+
+            .accordion-body {
+                padding: 12px 4px 0;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        .actions {
+            display: flex;
+            width: 100%;
+            align-self: center;
+            gap: 12px;
+
+            button {
+                width: 100%;
+                padding: 12px;
+                border-radius: 8px;
+                border: 0;
+                outline: none;
+                color: var(--white);
+
+                &.confirm {
+                    background: var(--second);
+                }
+
+                &.reset {
+                    background: var(--main);
+                }
+            }
+        }
+    }
+}

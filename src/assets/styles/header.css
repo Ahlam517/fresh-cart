@@ -1,0 +1,88 @@
+header {
+    padding: 24px 0;
+    background: var(--light-gray);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+
+    &.sticky {
+        box-shadow: var(--shadow);
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+
+            h1 {
+                color: var(--main);
+                font-size: 20px;
+            }
+        }
+
+        .nav-links {
+            flex: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 42px;
+
+            a {
+                color: var(--main);
+
+                &.active {
+                    color: var(--second);
+                }
+            }
+        }
+
+        .actions {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 24px;
+
+            .login {
+                padding: 8px 16px;
+                background: var(--second);
+                color: var(--white);
+                border-radius: 8px;
+            }
+
+            .cart {
+                position: relative;
+
+                span {
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 50%;
+                    background: var(--second);
+                    position: absolute;
+                    top: -4px;
+                    right: -10px;
+                    display: flex;
+                    font-size: 12px;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--white);
+                }
+
+                img {
+                    height: 22px;
+                }
+            }
+
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+}
