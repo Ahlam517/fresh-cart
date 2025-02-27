@@ -89,7 +89,7 @@ export default function Cart() {
                           <button
                             onClick={() =>
                               handleUpdateQuantity(
-                                product?._id,
+                                product?.product?._id,
                                 product?.count + 1
                               )
                             }
@@ -100,7 +100,7 @@ export default function Cart() {
                           <button
                             onClick={() =>
                               handleUpdateQuantity(
-                                product?._id,
+                                product?.product?._id,
                                 product?.count - 1
                               )
                             }
@@ -131,7 +131,7 @@ export default function Cart() {
                 {cart?.products?.reduce((a, b) => a + b.count * b.price, 0)} EGP
               </h6>
               <div className="actions_btns">
-                <button>Checkout</button>
+                <Link to="/checkout">Checkout</Link>
                 <button onClick={handleClearCart}>Clear Cart</button>
               </div>
             </div>

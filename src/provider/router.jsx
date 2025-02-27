@@ -11,6 +11,7 @@ import Register from "../routes/Register";
 import ResetPassword from "../routes/ResetPassword";
 import ProtectionProvider from "./ProtectionProvider";
 import ProductDetails from "../routes/ProductDetails";
+import Checkout from "../routes/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectionProvider>
             <WhishList />
+          </ProtectionProvider>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <ProtectionProvider>
+            <Checkout />
           </ProtectionProvider>
         ),
       },

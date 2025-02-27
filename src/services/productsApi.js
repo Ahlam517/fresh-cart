@@ -1,10 +1,14 @@
 import axiosInstance from "../utils/axiosInstance";
 
-export async function getProducts() {
+export async function getProducts(category, brand, search, page) {
   try {
     const res = await axiosInstance.get("products", {
       params: {
         limit: 12,
+        page,
+        keyword: category,
+        brand,
+        search,
       },
     });
     return res?.data;
@@ -12,7 +16,6 @@ export async function getProducts() {
     console.error("Error featching products => ", error);
   }
 }
-
 
 export async function getProduct(id) {
   try {

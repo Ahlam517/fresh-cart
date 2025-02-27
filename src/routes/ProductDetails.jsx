@@ -5,6 +5,9 @@ import useGetProduct from "../hooks/home/useGetProduct";
 import useAuth from "../hooks/auth/useAuth";
 import useGetWishList from "../hooks/wishlist/useGetWishList";
 import useGetCart from "../hooks/cart/useGetCart";
+import { toast } from "sonner";
+import axiosInstance from "../utils/axiosInstance";
+import { useState } from "react";
 
 export default function ProductDetails() {
   const { data: product } = useGetProduct();
@@ -13,7 +16,67 @@ export default function ProductDetails() {
   const { refetch } = useGetCart();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const isFav = wishList?.find((p) => p._id === product?._id);
+
+  const handleAddToFav = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isAuthed) navigate("/login");
+
+    try {
+      const res = await axiosInstance.post("/wishlist", {
+        productId: product?._id,
+      });
+
+      if (res.status === 200 || res.status === 201) {
+        toast.success("Product added to wishlist");
+        refetchFavs();
+      }
+    } catch (error) {
+      console.error("Error adding to cart => ", error);
+    }
+  };
+
+  const handleRemoveFav = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isAuthed) navigate("/login");
+
+    try {
+      const res = await axiosInstance.delete(`/wishlist/${product?._id}`);
+
+      if (res.status === 200 || res.status === 201) {
+        toast.success("Product removed to wishlist");
+        refetchFavs();
+      }
+    } catch (error) {
+      console.error("Error adding to cart => ", error);
+    }
+  };
+
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLoading(true);
+    if (!isAuthed) navigate("/login");
+
+    try {
+      const res = await axiosInstance.post("/cart", {
+        productId: product?._id,
+      });
+
+      if (res.status === 200 || res.status === 201) {
+        toast.success("Product added to cart");
+        navigate("/cart");
+        refetch();
+      }
+    } catch (error) {
+      console.error("Error adding to cart => ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="product_details">
@@ -56,12 +119,35 @@ export default function ProductDetails() {
               <h6>In Stock: {product?.quantity} item</h6>
               <h6>Price: {product?.price} EGP</h6>
 
-              <div className="d-flex gap-2">
+              <div className="d-flex gap-5 mt-4">
                 <div className="rate">
                   <img src="/star.svg" alt="start" />
                   <span>{product?.ratingsAverage}</span>
                 </div>
+
+                <button
+                  disabled={!isAuthed}
+                  className="fav_btn"
+                  onClick={isFav ? handleRemoveFav : handleAddToFav}
+                >
+                  <img
+                    src="/heart.svg"
+                    alt="heart"
+                    className={isFav ? "inFav" : ""}
+                  />
+                  {isFav ? "Remove from" : "Add to"} wishlist
+                </button>
               </div>
+
+              <button
+                disabled={!isAuthed}
+                style={{ opacity: loading ? 0.5 : 1 }}
+                type="button"
+                className="add_to_cart_btn"
+                onClick={handleAddToCart}
+              >
+                Add to cart
+              </button>
             </div>
           </div>
         </div>

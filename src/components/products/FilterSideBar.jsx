@@ -1,15 +1,23 @@
 import { Accordion, Form } from "react-bootstrap";
 import useGetBrands from "../../hooks/home/useGetBrands";
 import useGetCategories from "../../hooks/home/useGetCategories";
+import { useSearchParams } from "react-router";
 
 export default function FilterSideBar() {
   const { data: brands } = useGetBrands();
   const { data: categories } = useGetCategories();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <aside className="col-lg-3 col-md-6 col-12 p-2">
       <form className="side_bar form">
-        <Form.Control type="text" placeholder="Search" className="search" />
+        <Form.Control
+          type="text"
+          placeholder="Search"
+          className="search"
+          value={searchParams.get("search")}
+          onChange={(e) => setSearchParams({ search: e.target.value })}
+        />
 
         <Accordion defaultActiveKey="0">
           <Accordion.Item eventKey="0">
@@ -22,6 +30,8 @@ export default function FilterSideBar() {
                   name="category"
                   label={category.name}
                   className="checkbox"
+                  value={searchParams.get("category")}
+                  onChange={(e) => setSearchParams({ category: e.target.value })}
                 />
               ))}
             </Accordion.Body>
@@ -36,6 +46,8 @@ export default function FilterSideBar() {
                   name="brand"
                   label={brand.name}
                   className="checkbox"
+                  value={searchParams.get("brand")}
+                  onChange={(e) => setSearchParams({ brand: e.target.value })}
                 />
               ))}
             </Accordion.Body>
